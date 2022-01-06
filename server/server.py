@@ -30,34 +30,37 @@ def push_level():
 
 
 @app.get("/set-lamp-level")
-async def set_lamp_level(level: int, token: str):
+async def set_lamp_level(level, token: str):
 	global current_level
 	global max_level
 	global is_running
 	global api_token
 
 	if token != api_token:
-		return {"status": "error", "message": "invalid token"}
+		return {"message": "invalid token", "status": {"status": "error"}}
 
 	while is_running:
 		await asyncio.sleep(0.1)
+
+	level = int(level)
 
 	ser.read_all()
 
 	is_running = True
 	if level > max_level:
 		is_running = False
-		return {"message": "level too high", "status": "error"}
+		return {"message": "level too high", "status": {"status": "error"}}
 	if level < 0:
 		is_running = False
-		return {"message": "level too low", "status": "error"}
+		return {"message": "level too low", "status": {"status": "error"}}
+		return {"message": "level too low", "status": {"status": "success", "level": current_level, "position": current_position}}
 	if level > current_level:
 		push_cnt = level - current_level
 	elif level < current_level:
 		push_cnt = level + max_level - current_level + 1
 	else:
 		is_running = False
-		return {"message": "None", "status": "done"}
+		return {"message": "None", "status": {"status": "success", "level": current_level, "position": current_position}}
 	print('push_cnt:', push_cnt)
 	for i in range(push_cnt):
 		push_level()
@@ -65,23 +68,42 @@ async def set_lamp_level(level: int, token: str):
 		print('pushed:', i + 1, '/', push_cnt)
 	current_level = level
 	is_running = False
-	return {"message": "None", "status": "done"}
+	return {"message": "None", "status": {"status": "success", "level": current_level, "position": current_position}}
 
 
 @app.get("/set-current-level")
-async def set_current_level(level: int, token: str):
+async def set_current_level(level, token: str):
+	global current_position
 	global current_level
 
-	current_level = level
-	return {"message": "None", "status": "done"}
+	if token != api_token:
+		return {"message": "invalid token", "status": {"status": "error"}}
+	
+	current_level = int(level)
+	return {"message": "None", "status": {"status": "success", "level": current_level, "position": current_position}}
 
 
 @app.get("/set-current-position")
-async def set_current_level(position: int, token: str):
+async def set_current_position(position, token: str):
 	global current_position
+	global current_level
 
-	current_position = position
-	return {"message": "None", "status": "done"}
+	if token != api_token:
+		return {"message": "invalid token", "status": {"status": "error"}}
+	
+	current_position = int(position)
+	return {"message": "None", "status": {"status": "success", "level": current_level, "position": current_position}}
+
+
+@app.get("/get-status")
+async def get_status(token: str):
+	global current_position
+	global current_level
+
+	if token != api_token:
+		return {"message": "invalid token", "status": {"status": "error"}}
+	
+	return {"message": "None", "status": {"status": "success", "level": current_level, "position": current_position}}
 
 
 if __name__ == "__main__":
