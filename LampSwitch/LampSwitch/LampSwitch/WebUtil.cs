@@ -11,7 +11,7 @@ namespace LampSwitch
     {
         private static WebClient webClient = new WebClient();
 
-        public static JObject GETAsync(string requestUri, Dictionary<string, string> param)
+        public static JObject GET(string requestUri, Dictionary<string, string> param)
         {
             webClient.QueryString.Clear();
             foreach (KeyValuePair<string, string> kv in param)

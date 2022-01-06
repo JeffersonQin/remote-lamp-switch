@@ -18,7 +18,7 @@ namespace LampSwitch
             ViewModel = BindingContext as LampStatusViewModel;
             try
             {
-                var res = WebUtil.GETAsync("get-status", new Dictionary<string, string>());
+                var res = WebUtil.GET("get-status", new Dictionary<string, string>());
                 if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                 if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
             }
@@ -35,7 +35,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel ++;
                 try
                 {
-                    var res = WebUtil.GETAsync("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
+                    var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
                     if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                     if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
                 } catch (Exception ex)
@@ -52,7 +52,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel --;
                 try
                 {
-                    var res = WebUtil.GETAsync("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
+                    var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
                     if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                     if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
                 }
@@ -70,7 +70,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel ++;
                 try
                 {
-                    var res = WebUtil.GETAsync("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
+                    var res = WebUtil.GET("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
                     if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                     if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
                 } catch (Exception ex)
@@ -87,7 +87,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel --;
                 try
                 {
-                    var res = WebUtil.GETAsync("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
+                    var res = WebUtil.GET("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
                     if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                     if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
                 } catch (Exception ex)
@@ -101,7 +101,7 @@ namespace LampSwitch
             ViewModel.CurrentPosition ^= 1;
             try
             {
-                var res = WebUtil.GETAsync("set-current-position", new Dictionary<string, string> { { "position", ViewModel.CurrentPosition + "" } });
+                var res = WebUtil.GET("set-current-position", new Dictionary<string, string> { { "position", ViewModel.CurrentPosition + "" } });
                 if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                 if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
             } catch (Exception ex)
@@ -115,7 +115,7 @@ namespace LampSwitch
             ViewModel.CurrentLevel = Settings.MaxLevel;
             try
             {
-                var res = WebUtil.GETAsync("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
+                var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
                 if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                 if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
             }
@@ -130,7 +130,7 @@ namespace LampSwitch
             ViewModel.CurrentLevel = 0;
             try
             {
-                var res = WebUtil.GETAsync("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
+                var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
                 if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                 if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
             }
