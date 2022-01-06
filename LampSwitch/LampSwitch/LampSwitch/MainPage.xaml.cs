@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -95,7 +95,7 @@ namespace LampSwitch
             ViewModel.CurrentPosition ^= 1;
             try
             {
-                var res = WebUtil.GETAsync("set-current-position", new Dictionary<string, string> { { "position", ViewModel.CurrentLevel + "" } });
+                var res = WebUtil.GETAsync("set-current-position", new Dictionary<string, string> { { "position", ViewModel.CurrentPosition + "" } });
                 if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
                 if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
             } catch (Exception ex)
