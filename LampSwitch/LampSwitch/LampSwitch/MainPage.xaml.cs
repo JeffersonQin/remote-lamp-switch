@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,10 +16,16 @@ namespace LampSwitch
         {
             InitializeComponent();
             ViewModel = BindingContext as LampStatusViewModel;
-            var res = WebUtil.GETAsync("get-status", new Dictionary<string, string>());
-            Console.WriteLine(res.ToString());
-            if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-            if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+            try
+            {
+                var res = WebUtil.GETAsync("get-status", new Dictionary<string, string>());
+                if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
+                if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
+            }
         }
 
         private async void AddLevel(object sender, EventArgs e)
