@@ -8,7 +8,7 @@ int cpin = 10;
 int dpin = 11;
 int delaytime = 3;
 
-int loopcount = 64;
+int loopcount = 48;
 
 void anti_clockwise()
 {
