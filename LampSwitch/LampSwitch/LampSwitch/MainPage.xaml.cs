@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,15 +13,19 @@ namespace LampSwitch
     {
         private LampStatusViewModel ViewModel;
 
+        private void UpdateStatus(JObject res)
+        {
+            if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
+            if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+        }
+
         public MainPage()
         {
             InitializeComponent();
             ViewModel = BindingContext as LampStatusViewModel;
             try
             {
-                var res = WebUtil.GET("get-status", new Dictionary<string, string>());
-                if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                UpdateStatus(WebUtil.GET("get-status", new Dictionary<string, string>()));
             }
             catch (Exception ex)
             {
@@ -35,9 +40,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel ++;
                 try
                 {
-                    var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
-                    if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                    if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                    UpdateStatus(WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } }));
                 } catch (Exception ex)
                 {
                     await DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
@@ -52,9 +55,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel --;
                 try
                 {
-                    var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
-                    if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                    if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                    UpdateStatus(WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } }));
                 }
                 catch (Exception ex)
                 {
@@ -70,9 +71,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel ++;
                 try
                 {
-                    var res = WebUtil.GET("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
-                    if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                    if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                    UpdateStatus(WebUtil.GET("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } }));
                 } catch (Exception ex)
                 {
                     await DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
@@ -87,9 +86,7 @@ namespace LampSwitch
                 ViewModel.CurrentLevel --;
                 try
                 {
-                    var res = WebUtil.GET("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
-                    if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                    if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                    UpdateStatus(WebUtil.GET("set-current-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } }));
                 } catch (Exception ex)
                 {
                     await DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
@@ -101,9 +98,7 @@ namespace LampSwitch
             ViewModel.CurrentPosition ^= 1;
             try
             {
-                var res = WebUtil.GET("set-current-position", new Dictionary<string, string> { { "position", ViewModel.CurrentPosition + "" } });
-                if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                UpdateStatus(WebUtil.GET("set-current-position", new Dictionary<string, string> { { "position", ViewModel.CurrentPosition + "" } }));
             } catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
@@ -115,9 +110,7 @@ namespace LampSwitch
             ViewModel.CurrentLevel = Settings.MaxLevel;
             try
             {
-                var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
-                if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                UpdateStatus(WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } }));
             }
             catch (Exception ex)
             {
@@ -130,13 +123,27 @@ namespace LampSwitch
             ViewModel.CurrentLevel = 0;
             try
             {
-                var res = WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } });
-                if (res["level"] != null) ViewModel.CurrentLevel = int.Parse(res["level"].ToString());
-                if (res["position"] != null) ViewModel.CurrentPosition = int.Parse(res["position"].ToString());
+                UpdateStatus(WebUtil.GET("set-lamp-level", new Dictionary<string, string> { { "level", ViewModel.CurrentLevel + "" } }));
             }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
+            }
+        }
+
+        private async void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateStatus(WebUtil.GET("get-status", new Dictionary<string, string>()));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message + "\n" + ex.StackTrace, "OK");
+            }
+            finally
+            {
+                ViewModel.IsRefreshing = false;
             }
         }
     }

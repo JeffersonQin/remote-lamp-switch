@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace LampSwitch
@@ -18,6 +19,14 @@ namespace LampSwitch
         {
             get => _currentPosition;
             set => SetProperty(ref _currentPosition, value);
+        }
+
+        private bool _isRefreshing = false;
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
         }
     }
 }

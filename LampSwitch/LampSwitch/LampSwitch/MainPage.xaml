@@ -9,85 +9,87 @@
     <ContentPage.BindingContext>
         <local:LampStatusViewModel/>
     </ContentPage.BindingContext>
-    <ScrollView>
-        <StackLayout>
-            <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Set Up Basic Info</Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+    <RefreshView IsRefreshing="{Binding IsRefreshing}" Refreshing="RefreshView_Refreshing">
+        <ScrollView>
+            <StackLayout>
+                <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Set Up Basic Info</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="Address"/>
-                <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
-                   Grid.Column ="1" Text="{Binding Source={x:Static local:Settings.Address}}"/>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                    <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                   Grid.Column ="1" Text="{Binding Source={x:Static local:Settings.Address}, Mode=TwoWay}"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="Port"/>
-                <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
-                   Grid.Column ="1" Text="{Binding Source={x:Static local:Settings.Port}}"/>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                    <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                   Grid.Column ="1" Text="{Binding Source={x:Static local:Settings.Port}, Mode=TwoWay}"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="Max Level"/>
-                <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
-                   Grid.Column ="1" Text="{Binding Source={x:Static local:Settings.MaxLevel}}"/>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                    <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                   Grid.Column ="1" Text="{Binding Source={x:Static local:Settings.MaxLevel}, Mode=TwoWay}"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="Token"/>
-                <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
-                   Grid.Column ="1" IsPassword="True" Text="{Binding Source={x:Static local:Settings.Token}}"/>
-            </Grid>
-            <Button FontSize="30" Margin="10" Clicked="TurnOnTheLight" Text="Turn on the Lamp"/>
-            <Button FontSize="30" Margin="10" Clicked="TurnOffTheLight" Text="Turn off the Lamp"/>
-            <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Set Lamp Level</Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                    <Entry HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                   Grid.Column ="1" IsPassword="True" Text="{Binding Source={x:Static local:Settings.Token}, Mode=TwoWay}"/>
+                </Grid>
+                <Button FontSize="30" Margin="10" Clicked="TurnOnTheLight" Text="Turn on the Lamp"/>
+                <Button FontSize="30" Margin="10" Clicked="TurnOffTheLight" Text="Turn off the Lamp"/>
+                <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Set Lamp Level</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="{Binding CurrentLevel}"/>
-                <Button FontSize="25" Margin ="5" Grid.Column="1" Text="+" Clicked="AddLevel"/>
-                <Button FontSize="25" Margin ="5" Grid.Column="2" Text="-" Clicked="MinusLevel"/>
-            </Grid>
-            <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Report Current Level</Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                    <Button FontSize="25" Margin ="5" Grid.Column="1" Text="+" Clicked="AddLevel"/>
+                    <Button FontSize="25" Margin ="5" Grid.Column="2" Text="-" Clicked="MinusLevel"/>
+                </Grid>
+                <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Report Current Level</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="{Binding CurrentLevel}"/>
-                <Button FontSize="25" Margin ="5" Grid.Column="1" Text="+" Clicked="AddCurrentLevel"/>
-                <Button FontSize="25" Margin ="5" Grid.Column="2" Text="-" Clicked="MinusCurrentLevel"/>
-            </Grid>
-            <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Report Current Position</Label>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
+                    <Button FontSize="25" Margin ="5" Grid.Column="1" Text="+" Clicked="AddCurrentLevel"/>
+                    <Button FontSize="25" Margin ="5" Grid.Column="2" Text="-" Clicked="MinusCurrentLevel"/>
+                </Grid>
+                <Label VerticalTextAlignment="Center" FontSize="30" Margin="20">Report Current Position</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="25" Margin ="5" 
                    Grid.Column ="0" Text="{Binding CurrentPosition, Converter={StaticResource PositionConverter}}"/>
-                <Button FontSize="25" Margin ="5" Grid.Column="1" Text="Switch" Clicked="SwitchPosition"/>
-            </Grid>
-        </StackLayout>
-    </ScrollView>
+                    <Button FontSize="25" Margin ="5" Grid.Column="1" Text="Switch" Clicked="SwitchPosition"/>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>
