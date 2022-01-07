@@ -119,8 +119,16 @@ delay_time = 0.8          # 两次请求移动间隔时间
 
 ## App
 
+<div align="center">
+	<img src="assets/screenshot.jpg" width=300>
+</div>
+
 用 Xamarin 开发，大部分代码抽取自我的项目 [YuzuMarker](https://github.com/JeffersonQin/YuzuMarker)
 
 Nuget Dependency:
 
 * Newtonsoft.Json
+
+### Knwon Issues
+
+* 设置的持久化还没写，static class 的 two-way binding 有点问题，bug 还没修
