@@ -132,3 +132,9 @@ Nuget Dependency:
 ### Knwon Issues
 
 * 设置的持久化还没写，static class 的 two-way binding 有点问题，bug 还没修
+
+## UWP App Loopback
+
+由于 UWP 对于本地回环网络的限制，所以如果控制服务器在本机则会产生问题。可以使用 Fiddler 之类的工具解除限制。关键词：UWP Loopback exemption
+
+![](./assets/uwp-loopback.png)
